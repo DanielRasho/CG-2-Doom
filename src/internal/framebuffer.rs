@@ -12,7 +12,7 @@ pub struct Framebuffer {
     current_color : Color
 }
 
-pub trait Renderable {
+pub trait RenderableToFile {
     fn render_buffer(&self, filename: &str) -> io::Result<()>;
     fn write_bmp_header(&self, file: &mut File) -> io::Result<()>;
     fn write_pixel_data(&self, file: &mut File) -> io::Result<()>;
@@ -58,7 +58,8 @@ impl Framebuffer {
     }
 
     // Function to draw a point at (x, y) using the current color
-    pub fn point(&mut self, x: usize, y: usize) -> Color{
+    /// owo
+    pub fn get_point_color(&mut self, x: usize, y: usize) -> Color{
         if x < self.width && y < self.height {
             let index = y * self.width + x;
             let color = Color::from_hex(self.buffer[index]);
@@ -87,7 +88,7 @@ impl Framebuffer {
 
 }
 
-impl Renderable for Framebuffer {
+impl RenderableToFile for Framebuffer {
    fn render_buffer(&self, filename: &str) -> io::Result<()> {
         let path = Path::new(filename);
         let mut file = File::create(&path)?;

@@ -1,11 +1,10 @@
 mod internal;
 
-use internal::line::Line;
 use minifb::{Window, WindowOptions, Key};
-use nalgebra_glm::Vec3;
 use std::time::Duration;
-use internal::framebuffer::{Framebuffer, Renderable};
+use internal::framebuffer::{Framebuffer, RenderableToFile};
 use internal::color::Color;
+use internal::render::render;
 
 pub fn start(){
     
@@ -45,9 +44,8 @@ pub fn start(){
         }
         x += speed;
 
-        // Clear the framebuffer
-        framebuffer.set_background_color_hex(0x333355);
-        framebuffer.clear();
+        
+        render(&mut framebuffer);
 
         // Draw some points
         framebuffer.set_current_color_hex(0xFFDDDD);
