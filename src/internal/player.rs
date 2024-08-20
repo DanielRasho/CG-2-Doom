@@ -19,15 +19,17 @@ pub fn process_events (window: &Window, player: &mut Player) {
     const ROTATION: f32 = PI / 15.0;
 
     if window.is_key_down(Key::Left) {
-        player.pos.x -= MOVE_SPEED
+        player.angle -= ROTATION;
     }
     if window.is_key_down(Key::Right) {
-        player.pos.x += MOVE_SPEED
+        player.angle += ROTATION;
     }
     if window.is_key_down(Key::Up) {
-        player.pos.y -= MOVE_SPEED
+        player.pos.x = player.pos.x + MOVE_SPEED * player.angle.cos();
+        player.pos.y = player.pos.y + MOVE_SPEED * player.angle.sin();
     }
     if window.is_key_down(Key::Down) {
-        player.pos.y += MOVE_SPEED
+        player.pos.x = player.pos.x + MOVE_SPEED * player.angle.cos();
+        player.pos.y = player.pos.y + MOVE_SPEED * player.angle.sin();
     }
 }
