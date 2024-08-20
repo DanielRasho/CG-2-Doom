@@ -36,7 +36,11 @@ pub fn start(){
     let maze = load_maze("./maze.txt");
     
     // Player
-    let mut player = Player::new( Vec3::new(60.0, 40.0, 0.0), PI/2.0);
+    let mut player = Player::new( 
+        Vec3::new(60.0, 40.0, 0.0), 
+        PI/2.0,
+        PI/3.0
+    );
     
     // RENDER LOOP
     while window.is_open() {

@@ -10,6 +10,7 @@ pub fn cast_ray(
     framebuffer: &mut Framebuffer,
     maze: &Maze,
     player: &Player,
+    angle: f32,
     cell_size: usize,
     draw_line: bool
 ) -> Intersect {
@@ -17,8 +18,8 @@ pub fn cast_ray(
     
     framebuffer.set_current_color_hex(0xFFFFFF);
     loop {
-        let cos = d * player.angle.cos();
-        let sin = d * player.angle.sin();
+        let cos = d * angle.cos();
+        let sin = d * angle.sin();
         
         let x = (player.pos.x + cos) as usize;
         let y = (player.pos.y + sin) as usize;

@@ -1,3 +1,5 @@
+use core::num;
+
 use super::caster::cast_ray;
 use super::color::Color;
 use super::framebuffer::{Framebuffer};
@@ -25,7 +27,13 @@ pub fn render_2d(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player){
     // Render player
     framebuffer.set_current_color_hex( 0xFF0000 );
     draw_cell(framebuffer, player.pos.x as usize, player.pos.y as usize, 4);
-    cast_ray(framebuffer, maze, player, CELL_SIZE, true);
+    
+    let num_rays = 5;
+    for i in 0..num_rays{
+        let current_ray = i as f32 / num_rays as f32;
+        let a = player.angle - (player.field_of_view/ 2.0) + (player.field_of_view * current_ray);
+        cast_ray(framebuffer, maze, player, a, CELL_SIZE, true);
+    }
 }
 
 pub fn draw_cell(framebuffer: &mut Framebuffer,

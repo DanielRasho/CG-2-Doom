@@ -5,12 +5,13 @@ use nalgebra_glm::Vec3;
 
 pub struct Player {
     pub pos : Vec3,
-    pub angle : f32
+    pub angle : f32,
+    pub field_of_view: f32,
 }
 
 impl Player {
-    pub fn new( pos: Vec3, angle: f32) -> Player {
-        Player{ pos, angle }
+    pub fn new( pos: Vec3, angle: f32, field_of_view: f32) -> Player {
+        Player{ pos, angle, field_of_view}
     }
 }
 
