@@ -25,7 +25,7 @@ pub fn render( framebuffer: &mut Framebuffer, maze: &Maze, player: &Player) {
         let stake_bottom = (hh + (stake_height / 2.0)) as usize;
         
         for y in stake_top..stake_bottom {
-            framebuffer.set_background_color_hex(0xDA2399);
+            framebuffer.set_current_color(intersect.impact_color);
             framebuffer.draw_point(i, y);
         }
     }

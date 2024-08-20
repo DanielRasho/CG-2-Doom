@@ -1,9 +1,9 @@
 
-use super::{framebuffer::{Framebuffer}, maze::Maze, player::{Player}};
+use super::{color::Color, framebuffer::Framebuffer, maze::Maze, player::Player};
 
 pub struct Intersect {
     pub distance : f32,
-    pub impact : char
+    pub impact_color : Color
 }
 
 pub fn cast_ray(
@@ -35,7 +35,7 @@ pub fn cast_ray(
         if cell != ' ' {
             return Intersect {
                 distance: d,
-                impact: cell
+                impact_color: maze.color_for_cell(j, i)
             }
         }
         d += 0.5
