@@ -1,6 +1,10 @@
 mod internal;
 
+use nalgebra_glm::Vec3;
+
+use internal::player::{process_events, Player};
 use minifb::{Window, WindowOptions, Key};
+use std::f32::consts::PI;
 use std::time::Duration;
 use internal::framebuffer::{Framebuffer};
 use internal::color::Color;
@@ -31,14 +35,19 @@ pub fn start(){
     // LOAD MAZE
     let maze = load_maze("./maze.txt");
     
+    // Player
+    let mut player = Player::new( Vec3::new(60.0, 40.0, 0.0), PI/2.0);
+    
     // RENDER LOOP
     while window.is_open() {
         if window.is_key_down(Key::Escape) {
             break;
         }
         
-        render_2d(&mut framebuffer, &maze);
+        render_2d(&mut framebuffer, &maze, &player);
         framebuffer.set_current_color(Color::new(0, 0, 230));
+        
+        process_events(&window, &mut player);
 
         window
          .update_with_buffer(&framebuffer.buffer, framebuffer_width, framebuffer_height)

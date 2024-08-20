@@ -1,9 +1,12 @@
+use super::caster::cast_ray;
+use super::color::Color;
 use super::framebuffer::{Framebuffer};
 use super::maze::Maze;
+use super::player::Player;
 
 const CELL_SIZE : usize = 30;
 
-pub fn render_2d(framebuffer: &mut Framebuffer, maze: &Maze){
+pub fn render_2d(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player){
 
     // Clear framebuffer
     framebuffer.set_background_color_hex(0x333355);
@@ -18,6 +21,11 @@ pub fn render_2d(framebuffer: &mut Framebuffer, maze: &Maze){
             draw_cell(framebuffer, cell_xo, cell_yo, CELL_SIZE);
         }
     }
+    
+    // Render player
+    framebuffer.set_current_color_hex( 0xFF0000 );
+    draw_cell(framebuffer, player.pos.x as usize, player.pos.y as usize, 4);
+    cast_ray(framebuffer, maze, player, CELL_SIZE, true);
 }
 
 pub fn draw_cell(framebuffer: &mut Framebuffer,
