@@ -5,8 +5,8 @@ use std::path::Path;
 use crate::internal::color::Color;
 
 pub struct Framebuffer {
-    width : usize, 
-    height: usize,
+    pub width : usize, 
+    pub height: usize,
     pub buffer : Vec<u32>,
     background_color : Color,
     current_color : Color
