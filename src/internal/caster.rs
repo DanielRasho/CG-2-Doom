@@ -38,6 +38,6 @@ pub fn cast_ray(
                 impact: cell
             }
         }
-        d += 5.0
+        d += 0.5
     }
 }

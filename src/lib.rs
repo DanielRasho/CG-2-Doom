@@ -8,7 +8,7 @@ use std::f32::consts::PI;
 use std::time::Duration;
 use internal::framebuffer::{Framebuffer};
 use internal::color::Color;
-use internal::render::{render_2d,draw_cell};
+use internal::render::{render_2d, render,draw_cell};
 use internal::maze::{Maze, load_maze};
 
 pub fn start(){
@@ -48,15 +48,15 @@ pub fn start(){
             break;
         }
         
-        render_2d(&mut framebuffer, &maze, &player);
-        framebuffer.set_current_color(Color::new(0, 0, 230));
-        
-        process_events(&window, &mut player);
+        render(&mut framebuffer, &maze, &player);
+
+        process_events(&window, &mut player, &maze, 30);
 
         window
          .update_with_buffer(&framebuffer.buffer, framebuffer_width, framebuffer_height)
          .unwrap();
 
+        framebuffer.clear();
         std::thread::sleep(frame_delay)
     }
   
