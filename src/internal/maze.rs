@@ -41,8 +41,8 @@ impl Maze {
 
     pub fn texture_for_cell(&self, impact_char: char, tx: u32, ty: u32) -> Color {
         match impact_char {
-            '-' | '+' | '|' => WALL1.get_pyxel_color(tx, ty),
-            'g' => WALL1.get_pyxel_color(tx, ty),
+            '-' | '+' | '|' => WALL1.get_pixel_color(tx, ty),
+            'g' => WALL1.get_pixel_color(tx, ty),
             _ => Color::new(100, 150, 50),
         }
     }

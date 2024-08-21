@@ -14,8 +14,8 @@ use internal::maze::{Maze, load_maze};
 pub fn start(){
     
     // Window Size configuration
-    let window_width = 1000;
-    let window_height = 800;
+    let window_width = 660;
+    let window_height = 420;
     let framebuffer_width =  window_width;
     let framebuffer_height = window_height;
     
@@ -37,7 +37,7 @@ pub fn start(){
     
     // Player
     let mut player = Player::new( 
-        Vec3::new(60.0, 40.0, 0.0), 
+        Vec3::new(60.0, 50.0, 0.0), 
         PI/2.0,
         PI/3.0
     );

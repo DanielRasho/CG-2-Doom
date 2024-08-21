@@ -1,10 +1,9 @@
-
 use super::{color::Color, framebuffer::Framebuffer, maze::Maze, player::Player};
 
 pub struct Intersect {
     pub distance : f32,
     pub impact_char : char,
-    pub hit_x: f32
+    pub hit_x: usize
 }
 
 pub fn cast_ray(
@@ -32,21 +31,20 @@ pub fn cast_ray(
             framebuffer.draw_point(x, y)
         }
 
-        let cell = maze.char_at(j, i);
-        // Calculate the exact hit position on the wall
-        let hit_x = x - i * cell_size;
-        let hit_y = y - j * cell_size;
-        let mut max_hit = hit_y;
+        let hitx = x - i * cell_size;
+        let hity = y - j * cell_size;
+        let mut max_hit = hity;
         
-        if 1 < hit_x && hit_x < cell_size - 1 {
-            max_hit = hit_x;
+        if 1 < hitx && hitx < cell_size - 1 {
+            max_hit = hitx
         }
 
+        let cell = maze.char_at(j, i);
         if cell != ' ' {
             return Intersect {
                 distance: d,
                 impact_char: maze.char_at(j, i),
-                hit_x: max_hit as f32
+                hit_x: max_hit
             }
         }
         d += 0.5

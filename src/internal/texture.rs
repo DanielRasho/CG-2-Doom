@@ -16,12 +16,12 @@ impl Texture {
         let height = img.height();
         Texture { image: img, width, height }
     }
-    
-    pub fn get_pyxel_color(&self, x: u32, y: u32) -> Color {
+  
+    pub fn get_pixel_color(&self, x: u32, y: u32) -> Color {
         let pixel = self.image.get_pixel(x, y).to_rgb();
         let r = pixel[0];
         let g = pixel[1];
         let b = pixel[2];
-        Color::new(r,g, b)
+        Color::new(r, g, b)
     }
-}
+  }

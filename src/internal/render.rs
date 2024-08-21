@@ -1,5 +1,3 @@
-use core::num;
-
 use super::caster::cast_ray;
 use super::color::Color;
 use super::framebuffer::{Framebuffer};
@@ -40,14 +38,14 @@ pub fn render(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player) {
         let stake_bottom = (hh + (stake_height / 2.0)) as usize;
 
         // Determine texture coordinates
-        let texture_height = 512.0; // Correct height of the texture
-        let texture_width =  512.0;  // Correct width of the texture
+        let texture_height = 512 - 1; // Correct height of the texture
+        let texture_width = 512 - 1;  // Correct width of the texture
 
         for y in stake_top..stake_bottom {
             let texture_y = ((y - stake_top) as f32 / stake_height) * texture_height as f32;
             
             // Calculate texture_x based on hit_x and wall orientation
-            let texture_x = intersect.hit_x / CELL_SIZE as f32 * texture_width as f32;
+            let texture_x = intersect.hit_x as f32 / CELL_SIZE as f32 * texture_width as f32;
             
             // Get the color from the texture
             let color = maze.texture_for_cell(intersect.impact_char, texture_x as u32, texture_y as u32);
@@ -56,7 +54,6 @@ pub fn render(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player) {
         }
     }
 }
-
 pub fn render_2d(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player){
 
     // Clear framebuffer
