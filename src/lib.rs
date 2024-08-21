@@ -14,8 +14,8 @@ use internal::maze::{Maze, load_maze};
 pub fn start(){
     
     // Window Size configuration
-    let window_width = 660;
-    let window_height = 450;
+    let window_width = 1000;
+    let window_height = 800;
     let framebuffer_width =  window_width;
     let framebuffer_height = window_height;
     

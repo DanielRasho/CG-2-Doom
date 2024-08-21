@@ -5,3 +5,4 @@ pub mod render;
 pub mod player;
 pub mod maze;
 pub mod caster;
+pub mod texture;

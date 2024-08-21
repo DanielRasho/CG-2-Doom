@@ -1,8 +1,13 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
+use once_cell::sync::Lazy;
+use std::sync::Arc;
 
 use super::color::Color;
+use super::texture::Texture;
 
+static WALL1: Lazy<Arc<Texture>> = Lazy::new(
+    || Arc::new(Texture::new("assets/walls.png")));
 pub struct Maze {
     structure : Vec<Vec<char>>
 }
@@ -31,6 +36,14 @@ impl Maze {
             '|' => Color::new(40, 200, 60),
             'g' => Color::new(230, 50, 60),
             _ => Color::new(10, 10, 10)
+        }
+    }
+
+    pub fn texture_for_cell(&self, impact_char: char, tx: u32, ty: u32) -> Color {
+        match impact_char {
+            '-' | '+' | '|' => WALL1.get_pyxel_color(tx, ty),
+            'g' => WALL1.get_pyxel_color(tx, ty),
+            _ => Color::new(100, 150, 50),
         }
     }
 }
