@@ -1,1 +1,0 @@
-cargo build --release && ./target/release/cg-3-doom
