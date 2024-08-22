@@ -8,7 +8,7 @@ use std::f32::consts::PI;
 use std::time::Duration;
 use internal::framebuffer::{Framebuffer};
 use internal::color::Color;
-use internal::render::{render_2d, render,draw_cell};
+use internal::render::{render};
 use internal::maze::{Maze, load_maze};
 
 pub fn start(){

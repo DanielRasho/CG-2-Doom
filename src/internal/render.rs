@@ -53,35 +53,29 @@ pub fn render(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player) {
             framebuffer.draw_point(i, y);
         }
     }
+    render_minimap(framebuffer, maze, player, 0, 0)
 }
-pub fn render_2d(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player){
+
+pub fn render_minimap(framebuffer: &mut Framebuffer, maze: &Maze, player: &Player, posx: usize, posy: usize){
 
     // Clear framebuffer
-    framebuffer.set_background_color_hex(0x333355);
-    framebuffer.clear();
+    let cell_size = 8;
     
     for row in 0..maze.rows() {
         for col in 0..maze.column_len(row) {
-            let cell_xo = col * CELL_SIZE;
-            let cell_yo = row * CELL_SIZE;
+            let cell_xo = col * cell_size;
+            let cell_yo = row * cell_size;
             let color = maze.color_for_cell(row, col);
             framebuffer.set_current_color( color );
-            draw_cell(framebuffer, cell_xo, cell_yo, CELL_SIZE);
+            draw_cell(framebuffer, cell_xo, cell_yo, cell_size);
         }
     }
     
     // Render player
+    let player_x = player.pos.x / (cell_size as f32 / 2.0);
+    let player_y = player.pos.y / (cell_size as f32 / 2.0);
     framebuffer.set_current_color_hex( 0xFF0000 );
-    draw_cell(framebuffer, player.pos.x as usize, player.pos.y as usize, 4);
-    
-    /*
-    let num_rays = 100;
-    for i in 0..num_rays{
-        let current_ray = i as f32 / num_rays as f32;
-        let a = player.angle - (player.field_of_view/ 2.0) + (player.field_of_view * current_ray);
-        cast_ray(framebuffer, maze, player, a, CELL_SIZE, true);
-    }
-    */
+    draw_cell(framebuffer, player_x as usize, player_y as usize, cell_size);
 }
 
 pub fn draw_cell(framebuffer: &mut Framebuffer,
