@@ -69,7 +69,7 @@ pub fn start(){
 
         render(&mut framebuffer, &maze, &player);
 
-        process_events(&window, &mut player, &maze, 30);
+        process_events(&mut window, &mut player, &maze, 30);
 
         let fps = calculate_fps(&mut last_frame_time);
         let fps_text = format!("FPS: {}", fps as u32);
