@@ -6,3 +6,4 @@ pub mod player;
 pub mod maze;
 pub mod caster;
 pub mod texture;
+pub mod text;

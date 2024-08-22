@@ -31,9 +31,9 @@ impl Maze {
     pub fn color_for_cell(&self, row:usize, column:usize) -> Color {
         let cell = self.char_at(row, column);
         match cell {
-            '-' => Color::new(40, 120, 40),
-            '+' => Color::new(40, 200, 60),
-            '|' => Color::new(40, 200, 60),
+            '-' => Color::new(117, 82, 35),
+            '+' => Color::new(156, 129, 75),
+            '|' => Color::new(117, 82, 35),
             'g' => Color::new(230, 50, 60),
             _ => Color::new(10, 10, 10)
         }
