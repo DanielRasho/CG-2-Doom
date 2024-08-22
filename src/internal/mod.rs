@@ -7,3 +7,4 @@ pub mod maze;
 pub mod caster;
 pub mod texture;
 pub mod text;
+pub mod audio;

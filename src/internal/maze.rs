@@ -7,7 +7,7 @@ use super::color::Color;
 use super::texture::Texture;
 
 static WALL1: Lazy<Arc<Texture>> = Lazy::new(
-    || Arc::new(Texture::new("assets/walls.png")));
+    || Arc::new(Texture::new("assets/JaidenLogo.png")));
 pub struct Maze {
     structure : Vec<Vec<char>>
 }

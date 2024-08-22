@@ -1,6 +1,7 @@
 use std::time::Instant;
 mod internal;
 
+use internal::audio::{self, AudioPlayer};
 use nalgebra_glm::{Vec2, Vec3};
 use rusttype::Font;
 use image::{GenericImageView, DynamicImage};
@@ -36,6 +37,9 @@ pub fn start(){
       WindowOptions::default()
     ).unwrap();
     window.update();
+    
+    let mut audio = AudioPlayer::new("./assets/soundtrack.wav", 0.08);
+    audio.play();
     
     show_welcome_screen(&mut window, &mut framebuffer);
     
@@ -81,7 +85,7 @@ pub fn start(){
         framebuffer.clear();
         std::thread::sleep(frame_delay)
     }
-  
+    audio.stop();
 }
 
 
