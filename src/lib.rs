@@ -3,6 +3,7 @@ mod internal;
 
 use nalgebra_glm::Vec3;
 use rusttype::Font;
+use image::{GenericImageView, DynamicImage};
 
 use internal::player::{process_events, Player};
 use minifb::{Window, WindowOptions, Key};
@@ -14,13 +15,6 @@ use internal::render::{render};
 use internal::maze::{Maze, load_maze};
 use internal::text::{render_text, render_text_thicker, render_text_with_outline};
 
-fn calculate_fps(last_frame_time: &mut Instant) -> f32 {
-    let now = Instant::now();
-    let duration = now.duration_since(*last_frame_time);
-    *last_frame_time = now;
-
-    1.0 / duration.as_secs_f32()
-}
 
 pub fn start(){
     
@@ -42,6 +36,8 @@ pub fn start(){
       WindowOptions::default()
     ).unwrap();
     window.update();
+    
+    show_welcome_screen(&mut window, &mut framebuffer);
     
     // LOAD FONTS
     let font_data = include_bytes!("../assets/fonts/NotoSansMono-Bold.ttf");
@@ -83,4 +79,49 @@ pub fn start(){
         std::thread::sleep(frame_delay)
     }
   
+}
+
+
+fn calculate_fps(last_frame_time: &mut Instant) -> f32 {
+    let now = Instant::now();
+    let duration = now.duration_since(*last_frame_time);
+    *last_frame_time = now;
+
+    1.0 / duration.as_secs_f32()
+}
+
+// Function to display the welcome screen
+pub fn show_welcome_screen(window: &mut Window, framebuffer: &mut Framebuffer) {
+    // Load the welcome image
+    let img = image::open("assets/owo.png").expect("Failed to load welcome image");
+    let (img_width, img_height) = img.dimensions();
+
+    // Scale the image to fit the screen
+    let scale_x = framebuffer.width as f32 / img_width as f32;
+    let scale_y = framebuffer.height as f32 / img_height as f32;
+    let scale = scale_x.min(scale_y);
+
+    // Render the image on the framebuffer
+    for y in 0..framebuffer.height {
+        for x in 0..framebuffer.width {
+            let img_x = ((x as f32 / scale) as u32).min(img_width - 1);
+            let img_y = ((y as f32 / scale) as u32).min(img_height - 1);
+            let pixel = img.get_pixel(img_x, img_y);
+            let color = Color::new(pixel[0], pixel[1], pixel[2]);
+            framebuffer.set_current_color(color);
+            framebuffer.draw_point(x, y);
+        }
+    }
+
+    // Display the framebuffer
+    window.update_with_buffer(&framebuffer.buffer, framebuffer.width, framebuffer.height)
+        .expect("Failed to update window with welcome screen");
+
+    // Wait for any key press to start the game
+    while !window.is_open() || !window.is_key_down(Key::A) {
+        if window.is_key_down(Key::Escape) {
+            break;
+        }
+        window.update();
+    }
 }
