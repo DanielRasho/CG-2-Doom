@@ -7,7 +7,14 @@ use super::color::Color;
 use super::texture::Texture;
 
 static WALL1: Lazy<Arc<Texture>> = Lazy::new(
-    || Arc::new(Texture::new("assets/JaidenLogo.png")));
+    || Arc::new(Texture::new("assets/wall1.png")));
+static WALL2: Lazy<Arc<Texture>> = Lazy::new(
+    || Arc::new(Texture::new("assets/wall2.png")));
+static WALL3: Lazy<Arc<Texture>> = Lazy::new(
+    || Arc::new(Texture::new("assets/wall3.png")));
+static WALL4: Lazy<Arc<Texture>> = Lazy::new(
+    || Arc::new(Texture::new("assets/wall4.png")));
+
 pub struct Maze {
     structure : Vec<Vec<char>>
 }
@@ -41,8 +48,10 @@ impl Maze {
 
     pub fn texture_for_cell(&self, impact_char: char, tx: u32, ty: u32) -> Color {
         match impact_char {
-            '-' | '+' | '|' => WALL1.get_pixel_color(tx, ty),
-            'g' => WALL1.get_pixel_color(tx, ty),
+            '-'  => WALL1.get_pixel_color(tx, ty),
+            '+' => WALL3.get_pixel_color(tx, ty),
+            '|' => WALL4.get_pixel_color(tx, ty),
+            'g' => WALL2.get_pixel_color(tx, ty),
             _ => Color::new(100, 150, 50),
         }
     }

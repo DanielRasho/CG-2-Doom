@@ -100,7 +100,7 @@ fn calculate_fps(last_frame_time: &mut Instant) -> f32 {
 // Function to display the welcome screen
 pub fn show_welcome_screen(window: &mut Window, framebuffer: &mut Framebuffer) {
     // Load the welcome image
-    let img = image::open("assets/owo.png").expect("Failed to load welcome image");
+    let img = image::open("assets/wall2.png").expect("Failed to load welcome image");
     let (img_width, img_height) = img.dimensions();
 
     // Scale the image to fit the screen
@@ -134,7 +134,7 @@ pub fn show_welcome_screen(window: &mut Window, framebuffer: &mut Framebuffer) {
 }
 
 pub fn render_end_screen(framebuffer: &mut Framebuffer, window: &mut Window) {
-    let end_image = include_bytes!("../assets/owo.png");
+    let end_image = include_bytes!("../assets/wall4.png");
     let img = image::load_from_memory(end_image).expect("Failed to load end screen image");
 
     for y in 0..framebuffer.height {
