@@ -1,7 +1,7 @@
 use std::time::Instant;
 mod internal;
 
-use nalgebra_glm::Vec3;
+use nalgebra_glm::{Vec2, Vec3};
 use rusttype::Font;
 use image::{GenericImageView, DynamicImage};
 
@@ -65,7 +65,10 @@ pub fn start(){
 
         render(&mut framebuffer, &maze, &player);
 
-        process_events(&mut window, &mut player, &maze, 30);
+        if process_events(&mut window, &mut player, &maze, 30, Vec2::new(20.0, 13.0)) {
+            render_end_screen(&mut framebuffer, &mut window);
+            break
+        }
 
         let fps = calculate_fps(&mut last_frame_time);
         let fps_text = format!("FPS: {}", fps as u32);
@@ -114,6 +117,31 @@ pub fn show_welcome_screen(window: &mut Window, framebuffer: &mut Framebuffer) {
     }
 
     // Display the framebuffer
+    window.update_with_buffer(&framebuffer.buffer, framebuffer.width, framebuffer.height)
+        .expect("Failed to update window with welcome screen");
+
+    // Wait for any key press to start the game
+    while !window.is_open() || !window.is_key_down(Key::A) {
+        if window.is_key_down(Key::Escape) {
+            break;
+        }
+        window.update();
+    }
+}
+
+pub fn render_end_screen(framebuffer: &mut Framebuffer, window: &mut Window) {
+    let end_image = include_bytes!("../assets/owo.png");
+    let img = image::load_from_memory(end_image).expect("Failed to load end screen image");
+
+    for y in 0..framebuffer.height {
+        for x in 0..framebuffer.width {
+            let pixel = img.get_pixel(x as u32, y as u32);
+            let color = Color::new(pixel[0], pixel[1], pixel[2]);
+            framebuffer.set_current_color(color);
+            framebuffer.draw_point(x, y);
+        }
+    }
+
     window.update_with_buffer(&framebuffer.buffer, framebuffer.width, framebuffer.height)
         .expect("Failed to update window with welcome screen");
 

@@ -1,7 +1,7 @@
 use std::{cell, f32::consts::PI};
 
 use minifb::{Window, Key, MouseMode};
-use nalgebra_glm::Vec3;
+use nalgebra_glm::{Vec2, Vec3};
 
 use super::maze::Maze;
 
@@ -25,7 +25,7 @@ impl Player {
     }
 }
 
-pub fn process_events(window: &Window, player: &mut Player, maze: &Maze, cell_size: usize) {
+pub fn process_events(window: &Window, player: &mut Player, maze: &Maze, cell_size: usize, win_coordiantes: Vec2) -> bool {
     const MOVE_SPEED: f32 = 5.0;
     const MOUSE_SENSITIVITY: f32 = 0.005; // Adjust sensitivity as needed
     const ROTATION_SPEED: f32 = PI / 16.0;
@@ -65,6 +65,15 @@ pub fn process_events(window: &Window, player: &mut Player, maze: &Maze, cell_si
             player.pos.y = new_y;
         }
     }
+    
+    // Check if player reached the winning coordinate
+    if (player.pos.x / cell_size as f32) as usize == win_coordiantes.x as usize
+        && (player.pos.y / cell_size as f32) as usize == win_coordiantes.y as usize
+    {
+        return true; // Game finished
+    }
+
+    false
 }
 
 fn is_collision(x: f32, y: f32, maze: &Maze, cell_size: usize) -> bool {
